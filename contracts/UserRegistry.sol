@@ -12,11 +12,11 @@ modifier onlyBy(address _account)
         _;
     }
 
-  function setInspector (address memory applicant, address memory inspector) public onlyBy(owner) {
+  function setInspector (address applicant, address inspector) public onlyBy(owner) {
     registry[applicant] = inspector;
   }
 
-  function getInspector (address memory applicant) public view returns(string memory) {
+  function getInspector (address applicant) public view returns(address) {
     return registry[applicant];
   }
   
