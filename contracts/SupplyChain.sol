@@ -1,11 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.7.0;
 
+
+//importing all roles
+
+import "./FarmerRole.sol";
+import "./SeedCertificationAgency.sol";
+import "./SeedProducingAgency.sol";
+import "./SeedProducingPlant.sol";
+import "./SeedTestingLab.sol";
+
 contract SupplyChain {
     
     address owner;
     
     enum State {
+        
         Applied,     //0
         Inspect1,    //1
         Harvested,   //2
@@ -26,6 +36,23 @@ contract SupplyChain {
     event ApplicationRejected(uint appid);
     
     State constant defaultState = State.Applied;
+    mapping (uint => State) mapState;
+    uint appid = 0;
+    if(currentState==State.Applied) {
+        appid++;
+        currentState = State.Inspect1;
+        emit ApplicationReceived(appid);
+    }
+
+
+    // helper hash function - 1 param
+    function hash(string memory _str) private pure returns(bytes32) {
+        return  keccak256(abi.encode(_str));
+    }
+    // helper hash function - 2 params
+    function hash(string memory _str1, string memory _str2) private pure returns(bytes32) {
+        return  keccak256(abi.encode(_str1, _str2));
+    }
     
     modifier onlyOwner(){
         require(isOwner(),
@@ -44,8 +71,8 @@ contract SupplyChain {
     "Not the right caller");
     _;
     }
-    
-       
-    
-    
+
+
+
+
 }
