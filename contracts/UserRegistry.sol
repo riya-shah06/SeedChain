@@ -9,7 +9,7 @@ contract UserRegistry {
   mapping(address=>address[]) public inspector2farmers;
   mapping(address=>address[]) public lab2farmers;
 
-modifier onlyBy(address _account)
+    modifier onlyBy(address _account)
     {
         require(msg.sender == _account);
         _;
