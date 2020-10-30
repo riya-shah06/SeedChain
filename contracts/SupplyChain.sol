@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "./../roles/FarmerRole.sol";
-import "./../roles/InspectorRole.sol";
-import "./../roles/LabAnalystRole.sol";
+import "./roles/FarmerRole.sol";
+import "./roles/InspectorRole.sol";
+import "./roles/LabAnalystRole.sol";
 
 contract SupplyChain is FarmerRole, InspectorRole, LabAnalystRole {
     

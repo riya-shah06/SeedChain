@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+<div class="container-fluid p-0">
+            <!-- Home-->
+            <section class="resume-section" id="home">
+                <div class="resume-section-content">
+                    <h1 class="mb-0">Seed<span class="text-primary">Chain</span></h1>
+                    <div class="subheading mb-5">
+                        Blockchain for the seed supply chain ecosystem.
+                    </div>
+                    <p class="lead mb-5">
+                        From farmers to Seed Producing Agencies, to Seed Processing Plants to Seed Certification.
+                    </p>
+                    <button class="btn btn-outline-primary">Click Here to Fetch Details...</button>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- About-->
+            <section class="resume-section" id="about">
+                <div class="resume-section-content">
+                    <h1 class="mb-0">
+                        About
+                    </h1>
+                    <div class="subheading mb-5">
+                        Bla bla bla
+                    </div>
+                    <p class="lead mb-5">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                        officia deserunt mollit anim id est laborum.
+                    </p>
+                </div>
+            </section>
+            <!-- Login-->
+            <section class="resume-section" id="login">
+                <div class="resume-section-content">
+                    <h1 class="mb-5">
+                        Login
+                    </h1>
+                    <form action="#" method="#">
+                        <div class="d-flex mb-2">
+                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                              <label><h3 class="mb-0 mr-5">Username</h3></label>
+                              <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-2">
+                             <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                              <label><h3 class="mb-0 mr-5">Password</h3></label>
+                              <input type="password" name="password" class="form-control" value={{request.form.password}}>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary pl-5 pr-5 btn-lg mr-5">Submit</button>
+                        <button class="btn btn-outline-primary pl-5 pr-5 btn-lg" onclick="#">Create A Profile</button>
+                    </form>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Inspection-->
+            <section class="resume-section" id="inspection">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Inspection</h2>
+                    <form action="#" method="">
+                        <div class="d-flex mb-2">
+                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                                <label><h3 class="mb-0 mr-5">Something</h3></label>
+                                <input type="text" name="username" class="form-control mr-5" value={{request.form.username}}>
+                            </div>
+                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                                <label><h3 class="mb-0 mr-5">Something</h3></label>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary pl-5 pr-5 btn-lg">Submit</button>
+                    </form>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Lab Analysis-->
+            <section class="resume-section" id="lab_analysis">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab Analysis</h2>
+                    <form action="#" method="">
+                        <div class="d-flex mb-2">
+                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                                <label><h3 class="mb-0 mr-5">Something</h3></label>
+                                <input type="text" name="username" class="form-control mr-5" value={{request.form.username}}>
+                            </div>
+                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                                <label><h3 class="mb-0 mr-5">Something</h3></label>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary pl-5 pr-5 btn-lg">Submit</button>
+                    </form>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Meet the team-->
+            <section class="resume-section" id="meet_the_team">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Meet the Team</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Rachana</h3>
+                            <div class="subheading mb-3">Chaudhari</div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Revathi</h3>
+                            <div class="subheading mb-3">Vijayaraghavan</div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Riya</h3>
+                            <div class="subheading mb-3">Shah</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}

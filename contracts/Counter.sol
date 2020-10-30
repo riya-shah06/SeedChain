@@ -1,8 +1,8 @@
-pragma solidity 0.5.16;
+pragma solidity ^0.5.0;
 contract Counter {
-  uint public trasactionCount = 0;
+  uint public transactionCount = 0;
   
   function AddTransaction() public {
-    trasactionCount++;
+    transactionCount++;
   }
 }
