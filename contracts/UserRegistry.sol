@@ -6,7 +6,7 @@ contract UserRegistry {
 
   mapping(address=>address) registry;
 
-modifier onlyBy(address _account)
+    modifier onlyBy(address _account)
     {
         require(msg.sender == _account);
         _;
