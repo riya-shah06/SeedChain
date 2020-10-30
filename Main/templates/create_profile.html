@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+    <div class="container-fluid p-0">
+
+        <!-- Create a Profile-->
+        <section class="resume-section" id="create_profile">
+            <div class="resume-section-content">
+                <h2 class="mb-5">Create Profile</h2>
+                <form action="#" method="#">
+
+                    <table style="width:100%">
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5">Name</h3></label>
+                            </td>
+                            <td>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </td>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 ml-5">Email</h3></label>
+
+                            </td>
+                            <td>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5">Role</h3></label>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <select class="custom-select primary">
+                                        <option selected>Select a role</option>
+                                        <option value="1">Seed Grower</option>
+                                        <option value="2">Inspector</option>
+                                        <option value="3">Others</option>
+                                    </select>
+
+                                </div>
+                            </td>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 ml-5">Phone number</h3></label>
+
+                            </td>
+                            <td>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5">Password</h3></label>
+                            </td>
+                            <td>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </td>
+                            <td>
+                                <label><h3 class="mb-0 ml-5">Repeat Password</h3></label>
+
+                            </td>
+                            <td>
+                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center" colspan="4"><button type="submit" style="width:30%" class="btn btn-outline-primary btn-lg mt-5">Submit</button></td></tr>
+                    </table>
+
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}
