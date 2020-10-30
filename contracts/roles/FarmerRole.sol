@@ -31,7 +31,12 @@ contract FarmerRole {
 
   // Define a function 'renounceFarmer' to renounce this role
   function renounceFarmer() public {
-    _removeFarmer(msg.sender);
+    _renounceFarmer(msg.sender);
+  }
+  
+  // Define a function to explicitly renounce an account (priviledge only to admin roles)
+  function _renounceFarmer(address account) internal {
+    _removeFarmer(account);
   }
 
   // Define an internal function '_addFarmer' to add this role, called by 'addFarmer'
