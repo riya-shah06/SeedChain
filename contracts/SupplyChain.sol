@@ -1,10 +1,7 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.7.0;
 
-import "./../roles/FarmerRole.sol";
-import "./../roles/InspectorRole.sol";
-import "./../roles/LabAnalystRole.sol";
-
-contract SupplyChain is FarmerRole, InspectorRole, LabAnalystRole {
+contract SupplyChain {
     
     address owner;
     
@@ -46,10 +43,6 @@ contract SupplyChain is FarmerRole, InspectorRole, LabAnalystRole {
     require(msg.sender == _address,
     "Not the right caller");
     _;
-    }
-    
-    constructor() public {
-        owner = msg.sender;
     }
     
        
