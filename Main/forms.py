@@ -25,13 +25,13 @@ class RegisterForm(FlaskForm):
     submit_application_form = SubmitField("Submit")
 
 class LoginForm(FlaskForm):
-    myChoices = [('1', 'Select an Action'),('2', 'Create an Application'),('3', 'Upload Inspection Results'),('4', 'Upload Lab testing Results'),('5', 'Enter Buyer Details'),('6','Others')]
-    action = SelectField(u'Action', choices = myChoices, validators = [DataRequired()])
+    myChoices = [('1', 'Farmer'),('2', 'SCA'),('3', 'SPA'),('4', 'STL'),('5', 'SPP'),('6','Others')]
+    role = SelectField(u'Action', choices = myChoices, validators = [DataRequired()])
     username = StringField("Username", validators = [DataRequired()])
     submit_login = SubmitField("Submit")
 
 class ProfileForm(FlaskForm):
-    myChoices = [('1', 'Select a Role'), ('2', 'Seed Grower'), ('3', 'SPA'), ('4', 'SPP'), ('5','STL'), ('6', 'SCA')]
+    myChoices = [('1', 'Farmer'), ('2', 'Seed Grower'), ('3', 'SPA'), ('4', 'SPP'), ('5','STL'), ('6', 'SCA')]
     role = SelectField(u'Role', choices = myChoices, validators = [DataRequired()])
     fname = StringField("First Name", validators = [DataRequired()])
     lname = StringField("Last Name", validators = [DataRequired()])
@@ -39,9 +39,10 @@ class ProfileForm(FlaskForm):
     phoneNumber = StringField("Phone Number", validators = [DataRequired()])
     submit_profile = SubmitField("Submit")
 
-class CheckApplicationForm(FlaskForm):
-    appln_id = StringField("Application Id", validators=[DataRequired()])
-    submit_appln_id = SubmitField("Fetch Details")
+class FetchDetailsForm(FlaskForm):
+    appln_id = StringField("Application Id")
+    lotNumber = StringField("Lot Number")
+    submit_fetch_form = SubmitField("Fetch Details")
 
 class BuyerForm(FlaskForm):
     appln_id = StringField("Application Id", validators=[DataRequired()])

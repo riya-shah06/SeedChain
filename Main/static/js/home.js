@@ -51,6 +51,21 @@ function hide_create_profile(){
     document.getElementById('login_content').style.display = "block";
 }
 
+function show_lot_number(){
+    document.getElementById('appln_id_row').style.display = "none";
+    document.getElementById('lot_number_row').style.display = "block";
+    document.getElementById('appln_id_btn').style.display = "block";
+    document.getElementById('lot_number_btn').style.display = "none";
+}
+
+function hide_lot_number(){
+    document.getElementById('appln_id_row').style.display = "block";
+    document.getElementById('lot_number_row').style.display = "none";
+    document.getElementById('appln_id_btn').style.display = "none";
+    document.getElementById('lot_number_btn').style.display = "block";
+}
+
 $(document).ready(function(){
     hide_create_profile();
+    hide_lot_number();
 })

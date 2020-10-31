@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request
-from Main.forms import RegisterForm, LoginForm, ProfileForm, CheckApplicationForm, BuyerForm
+from Main.forms import RegisterForm, LoginForm, ProfileForm, FetchDetailsForm, BuyerForm
 from Main import app
 from datetime import date
 
@@ -9,15 +9,17 @@ from datetime import date
 def home():
     login_form = LoginForm()
     profile_form = ProfileForm()
-    check_application_form = CheckApplicationForm()
+    fetch_form = FetchDetailsForm()
 
     if login_form.submit_login.data and login_form.validate_on_submit():
-        username = login_form.action.data
-        choice = login_form.action.data
-        if choice=='2':
-            return redirect(url_for('application_form'))
+        username = login_form.username.data
+        choice = login_form.role.data
+        if choice =='1':
+            return redirect(url_for(''))
+        elif choice=='2':
+            return redirect(url_for('sca_home'))
         elif choice=='3':
-            return redirect(url_for('inspection_form'))
+            return redirect(url_for('spa_home'))
         elif choice=='4':
             return redirect(url_for('stl_form'))
         elif choice=='5':
@@ -26,12 +28,14 @@ def home():
             return redirect((url_for('home')))
     if profile_form.submit_profile.data and profile_form.validate_on_submit():
         print("Profile Created")
+        return redirect(url_for('home'))
 
-    if check_application_form.submit_appln_id and check_application_form.validate_on_submit():
-        applnId = check_application_form.appln_id.data
-        return redirect(url_for('fetch_details', applicationId=applnId, **request.args))
+    if fetch_form.submit_fetch_form and fetch_form.validate_on_submit():
+        lotNumber = fetch_form.lotNumber.data
+        applnId = fetch_form.appln_id.data
+        return redirect(url_for('fetch_details', applnId=applnId, lotNumber=lotNumber,  **request.args))
 
-    return render_template('home.html', login_form=login_form, profile_form=profile_form, check_application_form=check_application_form)
+    return render_template('home.html', login_form=login_form, profile_form=profile_form, fetch_form=fetch_form)
 
 @app.route("/stl_form")
 def stl_form():
@@ -41,9 +45,25 @@ def stl_form():
 def inspection_form():
     return render_template('inspection_form.html')
 
-@app.route("/fetch_details/<applicationId>")
-def fetch_details(applicationId):
-    return render_template('fetch_details.html', appln_id = applicationId)
+@app.route("/fetch_details")
+def fetch_details():
+        return render_template('fetch_details.html', applnId=request.args.get('applnId'), lotNumber=request.args.get('lotNumber'))
+
+@app.route("/sca_home")
+def sca_home():
+    return render_template('sca_home.html')
+
+@app.route("/spa_home")
+def spa_home():
+    return render_template('spa_home.html')
+
+@app.route("/farmer_home")
+def farmer_home():
+    return render_template('farmer_home.html')
+
+@app.route("/marketplace")
+def marketplace():
+    return render_template('marketplace.html')
 
 @app.route("/buyer_form",  methods=["POST", "GET"])
 def buyer_form():

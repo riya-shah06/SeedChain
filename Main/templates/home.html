@@ -9,10 +9,10 @@
         <section class="resume-section" id="home">
             <div class="resume-section-content">
                 <div>
-                    <h1 class="mb-0 mt-10">Seed<span class="text-primary">Chain</span></h1>
+                    <h1 class="mb-0 mt-10" style="text-shadow: 0 0 5px #ffffff, 0 0 5px #ffffff;">Seed<span class="text-primary" >Chain</span></h1>
                 </div>
-                <div class="subheading mb-5">
-                    Blockchain for the seed supply chain ecosystem.
+                <div class="mb-5">
+                    <h4>Blockchain for the seed supply chain ecosystem.</h4>
                 </div>
             </div>
         </section>
@@ -28,7 +28,7 @@
                     <div class="subheading mb-5">
                         Bla bla bla
                     </div>
-                    <p class="lead mb-5">
+                    <p class="lead mb-5" style="width: 60%">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                         et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                         aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -66,10 +66,10 @@
                             </tr>
                             <tr>
                                 <td style="text-align:start">
-                                    <label><h3 class="mb-0 mr-5">Action</h3></label>
+                                    <label><h3 class="mb-0 mr-5">Role</h3></label>
                                 </td>
                                 <td>
-                                    {{ login_form.action(class="form-control form-control-lg") }}
+                                    {{ login_form.role(class="form-control form-control-lg") }}
                                 </td>
                             </tr>
                             <tr>
@@ -172,7 +172,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align:center; padding-top: 0.5rem" colspan="2">
+                                <td style="text-align:center; padding-top: 0.5rem" colspan="4">
                                     {{profile_form.submit_profile(class="btn btn-outline-primary btn-lg profile_submit")}}
                                 </td>
                             </tr>
@@ -183,32 +183,60 @@
                 </div>
             </section>
             <!-- Fetch Details-->
-            <section class="resume-section" id="check_application">
+            <section class="resume-section" id="fetch_form">
             <div class="resume-section-content">
 
                 <h1 class="mb-5">
-                    Check Applications
+                    Fetch Details
                 </h1>
-                <form action="#" method="POST">
-                    {{ profile_form.hidden_tag() }}
-                    <div class="d-flex mb-2">
-                        <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                            <label><h3 class="mb-0 mr-5">Application Id</h3></label>
-                            {% if check_application_form.appln_id.errors %}
-                            {{ check_application_form.appln_id(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in check_application_form.appln_id.errors %}
-                                <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                            {{ check_application_form.appln_id(class="form-control form-control-lg mt-4") }}
-                            {% endif %}
-                        </div>
-                    </div>
+                <td><button class="btn btn-outline-primary mb-3" id="lot_number_btn" onclick="show_lot_number()">Want to enter lot number instead?</button></td>
+                <td><button class="btn btn-outline-primary mb-3" id="appln_id_btn" onclick="hide_lot_number()">Want to enter application id instead?</button></td>
 
-                    <div class="form-group d-flex flex-column flex-md-row">
-                        {{check_application_form.submit_appln_id(class="btn btn-outline-primary btn-lg pl-5 pr-5 mr-5")}}
+                <form action="" method="POST">
+                    {{ fetch_form.hidden_tag() }}
+                    <div>
+                        <table style="width: 100%; margin-bottom: 2rem" id="appln_id_row">
+                            <tr >
+                                <td>
+                                    <label><h3 class="mb-0 mr-5">Application Id</h3></label>
+                                </td>
+                                <td>
+                                    {% if fetch_form.appln_id.errors %}
+                                    {{ fetch_form.appln_id(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in fetch_form.appln_id.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ fetch_form.appln_id(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100%; margin-bottom: 2rem" id="lot_number_row">
+                            <tr >
+                                <td>
+                                    <label><h3 class="mb-0 mr-5">Lot Number</h3></label>
+                                </td>
+                                <td>
+                                    {% if fetch_form.lotNumber.errors %}
+                                    {{ fetch_form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in fetch_form.lotNumber.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ fetch_form.lotNumber(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div style="width: 50%">
+                        {{fetch_form.submit_fetch_form(class="btn btn-outline-primary btn-lg fetch_details_submit")}}
                     </div>
 
                 </form>
@@ -218,17 +246,20 @@
             <!-- Meet the team-->
             <section class="resume-section" id="meet_the_team">
                 <div class="resume-section-content">
-                    <h1 class="mb-5">Meet the Team</h1>
+                    <h1 class="mb-5" style="text-align: center">Meet the Team</h1>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1" style="text-align: center">
+                            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" style="width: 15rem; height: 15rem" src="../static/assets/Rachana.jpeg" alt="" /></span>
                             <h3 class="mb-0">Rachana</h3>
                             <div class="subheading mb-3">Chaudhari</div>
                         </div>
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1" style="text-align: center">
+                            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" style="width: 15rem; height: 15rem" src="../static/assets/Revathi.jpeg" alt="" /></span>
                             <h3 class="mb-0">Revathi</h3>
                             <div class="subheading mb-3">Vijayaraghavan</div>
                         </div>
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1" style="text-align: center">
+                            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" style="width: 15rem; height: 15rem" src="../static/assets/Riya.jpeg" alt="" /></span>
                             <h3 class="mb-0">Riya</h3>
                             <div class="subheading mb-3">Shah</div>
                         </div>

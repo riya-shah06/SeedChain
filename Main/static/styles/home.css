@@ -9814,7 +9814,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #147b8d !important;
+  color: #299bb0 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -10048,13 +10048,17 @@ p.lead {
   width: 50%;
 }
 
+.fetch_details_submit{
+  width: 100%;
+}
+
 .login_submit{
   width: 100%;
   margin-top: 2rem;
 }
 
 .background_div{
-  background-image: url("../assets/background_5.jpg");
+  background-image: url("../assets/background.jpg");
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
