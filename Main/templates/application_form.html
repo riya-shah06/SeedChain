@@ -1,0 +1,256 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+
+    <div class="container-fluid p-0">
+        <!-- Application Form-->
+        <section class="resume-section" id="application_form">
+            <div class="resume-section-content">
+                <div onclick="window.location.href='/home#login'">
+                    <i class="fas fa-chevron-left fa-3x"></i>
+                </div>
+                <h2 class="mb-2">Application Form</h2>
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <table id="application_table1" style="width:100%">
+                        <tr>
+                            <td><label><div class="subheading2">Lot Number</div></label></td>
+                            <td>
+                                {% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </td>
+                            <td><label><div class="subheading2">Owner</div></label></td>
+                            <td>{% if form.owner.errors %}
+                                {{ form.owner(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.owner.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.owner(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Crop</div></label></td>
+                            <td>{% if form.crop.errors %}
+                                {{ form.crop(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.crop.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.crop(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Variety</div></label></td>
+                            <td>{% if form.variety.errors %}
+                                {{ form.variety(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.variety.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.variety(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <hr/>
+                    <table id="application_table2" style="width: 100%">
+                        <tr>
+                            <td><label><div class="subheading2" >Source Class</div></label></td>
+                            <td colspan="2">{% if form.sourceClass.errors %}
+                                {{ form.sourceClass(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.sourceClass.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.sourceClass(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Destination Class</div></label></td>
+                            <td colspan="2">{% if form.destinationClass.errors %}
+                                {{ form.destinationClass(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.destinationClass.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.destinationClass(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Source Tag No.</div></label></td>
+                            <td>{% if form.sourceTagNo.errors %}
+                                {{ form.sourceTagNo(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.sourceTagNo.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.sourceTagNo(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >SG ID</div></label></td>
+                            <td>{% if form.sgID.errors %}
+                                {{ form.sgID(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.sgID.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.sgID(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Quantity</div></label></td>
+                            <td>{% if form.sourceQuantity.errors %}
+                                {{ form.sourceQuantity(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.sourceQuantity.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.sourceQuantity(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >SPA Name</div></label></td>
+                            <td>{% if form.spaName.errors %}
+                                {{ form.spaName(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.spaName.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.spaName(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Grower Name</div></label></td>
+                            <td>{% if form.growerName.errors %}
+                                {{ form.growerName(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.growerName.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.growerName(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Source Store House</div></label></td>
+                            <td>{% if form.sourceStorehouse.errors %}
+                                {{ form.sourceStorehouse(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.sourceStorehouse.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.sourceStorehouse(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table id="application_table3" style="width: 100%">
+                        <tr>
+                            <td><label><div class="subheading2" >FinYear</div></label></td>
+                            <td>{% if form.finYear.errors %}
+                                {{ form.finYear(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.finYear.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.finYear(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Season</div></label></td>
+                            <td>{% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Khata Number</div></label></td>
+                            <td>{% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Plot Number</div></label></td>
+                            <td>{% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Area</div></label></td>
+                            <td>{% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                            <td><label><div class="subheading2" >Crop Registration Code</div></label></td>
+                            <td>{% if form.lotNumber.errors %}
+                                {{ form.lotNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lotNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.lotNumber(class="form-control form-control-lg") }}
+                                {% endif %}</td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="text-align: center">
+                                {{form.submit_application_form(class="btn btn-outline-primary pl-5 pr-5 mr-5 btn-lg application_submit")}}
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}
