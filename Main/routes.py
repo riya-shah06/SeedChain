@@ -1,8 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request
 from Main.forms import RegisterForm, LoginForm, ProfileForm, CheckApplicationForm, BuyerForm
 from Main import app
-from datetime import date
 
+
+import Main.blockchain as blockchain
 
 @app.route("/")
 @app.route("/home", methods=["POST", "GET"])
@@ -25,7 +26,13 @@ def home():
         elif choice=='6':
             return redirect((url_for('home')))
     if profile_form.submit_profile.data and profile_form.validate_on_submit():
-        print("Profile Created")
+        fname =  profile_form.fname.data
+        lname = profile_form.lname.data
+        role = profile_form.role.data
+        phone_number = profile_form.phoneNumber.data
+        email = profile_form.email.data # not used
+        blockchain.bc_create_profile(role, fname, lname, phone_number)
+        print(f"Profile Created for {role}: {fname} {lname}")
 
     if check_application_form.submit_appln_id and check_application_form.validate_on_submit():
         applnId = check_application_form.appln_id.data
@@ -35,6 +42,7 @@ def home():
 
 @app.route("/stl_form")
 def stl_form():
+    ## sample secret key
     return render_template('stl_form.html')
 
 @app.route("/inspection_form")
@@ -49,6 +57,12 @@ def fetch_details(applicationId):
 def buyer_form():
     buyer_form = BuyerForm()
     if buyer_form.validate_on_submit:
+        appln_id = int(buyer_form.appln_id.data)
+        quantity = int(buyer_form.quantity.data)
+        fname = buyer_form.fname.data
+        lname = buyer_form.lname.data
+        phone_no = buyer_form.phoneNumber.data
+        blockchain.buy_seeds(appln_id, quantity, fname, lname, phone_no)
         print("Buyer details added")
     return render_template('buyer_form.html', buyer_form=buyer_form)
 
@@ -56,7 +70,6 @@ def buyer_form():
 def application_form():
     form = RegisterForm()
     if form.validate_on_submit():
-        print("here 2 ")
         lotNumber = form.lotNumber.data
         owner = form.owner.data
         crop = form.crop.data
@@ -75,13 +88,30 @@ def application_form():
         landRecordsPlotNo = form.landRecordsPlotNo.data
         landRecordsArea = form.landRecordsArea.data
         cropRegCode = form.cropRegCode.data
-        dateOfIssue = date.today()
 
+        args_list = {
+            'lotNumber': lotNumber,
+            'owner':owner,
+            'crop':crop,
+            'variety':variety,
+            'sourceTagNo':sourceTagNo,
+            'sourceClass':sourceClass,
+            'destinationClass':destinationClass,
+            'sourceQuantity':sourceQuantity,
+            'growerName':growerName,
+            'spaName':spaName,
+            'sourceStorehouse':sourceStorehouse,
+            'sgID': sgID,
+            'finYear':finYear,
+            'season':season,
+            'landRecordsKhataNo':landRecordsKhataNo,
+            'landRecordsPlotNo':landRecordsPlotNo,
+            'landRecordsArea':landRecordsArea,
+            'cropRegCode':cropRegCode
+        }
         ## will be saved on BC
-        print("Saving details to blockchain..")
-        print("Lot No: ", lotNumber)
-        print("Crop Reg Code: ", cropRegCode)
-        print("Date: ", dateOfIssue)
+        print("Registering on blockchain")
+        blockchain.generate_application(args_list)
         return redirect(url_for('home'))
     return render_template('application_form.html', form=form)
 
