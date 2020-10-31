@@ -11,8 +11,7 @@ import "./roles/SeedProcessingPlant.sol";
 import "./roles/SeedTestingLab.sol";
 
 contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
-    
-    address owner;
+
     uint[] arrOfAppIds;
     
     enum State {
@@ -87,34 +86,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     mapping (uint => SPA) spaOfId;
     mapping (string=>SPA) secreteCodetoSPA; //for stl
 
-    // helper hash function - 1 param
-    function hash(string memory _str) private pure returns(bytes32) {
-        return  keccak256(abi.encode(_str));
-    }
-    // helper hash function - 2 params
-    function hash(string memory _str1, string memory _str2) private pure returns(bytes32) {
-        return  keccak256(abi.encode(_str1, _str2));
-    }
-    
-    modifier onlyOwner(){
-        require(isOwner(),
-        "You are not the owner");
-        _;
-    }
-    
-    //Check if calling address is of the owner
-    function isOwner() public view returns (bool) {
-        return (msg.sender == owner);
-    }
-    
-    // Define a modifer that verifies the Caller
-    modifier verifyCaller(address _address) {
-    require(msg.sender == _address,
-    "Not the right caller");
-    _;
-    }
-
-    // function to generate empty AppId if required
+//     function to generate empty AppId if required
     function generateEmptyApplication(uint appid) external onlySPA{
         arrOfAppIds.push(appid);
         mapState[appid] = defaultState;
@@ -288,7 +260,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
 
         // this loop creates and stores all tags of the bags for farmer to buy from
         for(uint i=0; i<noOfTags; i++){
-            
+
             string memory tagno = string(abi.encodePacked(tagSeries, "-", (tagNumberStart+i)));
             spa.tags.push(tagno);
         }
@@ -307,10 +279,10 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
 
         emit CertificateGranted(appid);
     }
-
+//
     function sellBagsToFarmer(uint appid, address farmer, uint noOfBags) external returns (string memory TagStartFrom) {
         SPA storage spa = spaOfId[appid];
-        
+
         TagStartFrom = string(abi.encodePacked(spa.tagSeries, "-",  spa.lastBagIdSold+1));
         spa.lastBagIdSold += noOfBags;
 
