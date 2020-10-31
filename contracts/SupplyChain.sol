@@ -7,7 +7,7 @@ pragma solidity ^0.7.0;
 import "./roles/FarmerRole.sol";
 import "./roles/SeedCertificationAgency.sol";
 import "./roles/SeedProducingAgency.sol";
-import "./roles/SeedProducingPlant.sol";
+import "./roles/SeedProcessingPlant.sol";
 import "./roles/SeedTestingLab.sol";
 
 contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
@@ -44,10 +44,8 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         uint sourceDateOfIssue;
         string growerName;
         string spaName;
-        uint dateOfIssue;
         string sourceStoreHouse;
         string destiStoreHouse;
-        string sgName;
         string sgId;
         string finYear;
         string season;
@@ -87,7 +85,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     State constant defaultState = State.Applied;
     mapping (uint => State) mapState; 
     mapping (uint => SPA) spaOfId;
-    mapping (string=>SPA) secreteCodetoSPA;
+    mapping (string=>SPA) secreteCodetoSPA; //for stl
 
     // helper hash function - 1 param
     function hash(string memory _str) private pure returns(bytes32) {
@@ -155,8 +153,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         string memory sourceQuantity,
         uint sourceDateOfIssue,
         string memory growerName,
-        string memory spaName,
-        uint dateOfIssue
+        string memory spaName
     ) external onlySPA {
         SPA storage spa = spaOfId[appid];
 
@@ -166,15 +163,12 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.sourceDateOfIssue = sourceDateOfIssue;
         spa.growerName = growerName;
         spa.spaName = spaName;
-        spa.dateOfIssue = dateOfIssue;
-
         spaOfId[appid] = spa;
     }
 
     function generateApplicationPart3(uint appid,
         string memory sourceStoreHouse,
         string memory destiStoreHouse,
-        string memory sgName,
         string memory sgId,
         string memory finYear,
         string memory season,
@@ -187,7 +181,6 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
 
         spa.sourceStoreHouse = sourceStoreHouse;
         spa.destiStoreHouse = destiStoreHouse;
-        spa.sgName = sgName;
         spa.sgId = sgId;
         spa.finYear = finYear;
         spa.season = season;
@@ -218,7 +211,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     function assignSPP(uint appid,
         string calldata sppName,
         string calldata sppId
-    ) external onlySCA {
+    ) external onlySPA {
 
         mapState[appid] = State.SeedProcessing;
         SPA storage spa = spaOfId[appid];
