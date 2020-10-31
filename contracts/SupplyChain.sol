@@ -71,8 +71,8 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         string[] tags;
         uint noOfTagsIssued;
         uint certificateValidity;
-        uint lastBagSold;
         address[] farmersSoldTo;
+        uint lastBagIdSold;
     }
     
     event ApplicationReceived(uint appid);
@@ -291,12 +291,12 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.tagIssuedRangeTo = tagRangeTo;
         spa.noOfTagsIssued = noOfTags;
         spa.certificateValidity = certiValidity;
-        spa.lastBagSold = 0;
+        spa.lastBagIdSold = tagNumberStart - 1;
 
         // this loop creates and stores all tags of the bags for farmer to buy from
         for(uint i=0; i<noOfTags; i++){
             
-            string memory tagno = string(abi.encodePacked(tagSeries, (tagNumberStart+i)));
+            string memory tagno = string(abi.encodePacked(tagSeries, "-", (tagNumberStart+i)));
             spa.tags.push(tagno);
         }
 
@@ -317,13 +317,9 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
 
     function sellBagsToFarmer(uint appid, address farmer, uint noOfBags) external returns (string memory TagStartFrom) {
         SPA storage spa = spaOfId[appid];
-        if(spa.lastBagSold == 0){
-            TagStartFrom = spa.tagIssuedRangeFrom;
-        }
-        else {
-            // add TagStartFrom based on what is generated
-        }
-        spa.lastBagSold += noOfBags;
+        
+        TagStartFrom = string(abi.encodePacked(spa.tagSeries, "-",  spa.lastBagIdSold+1));
+        spa.lastBagIdSold += noOfBags;
 
         // here will have to check if this farmer already exists in array, If yes, then skip
         spa.farmersSoldTo.push(farmer);
