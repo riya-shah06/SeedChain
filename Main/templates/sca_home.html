@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+
+    <div class="container-fluid p-0">
+
+        <!-- Details-->
+        <section class="resume-section" id="sca_home">
+            <div class="resume-section-content">
+                <div onclick="window.location.href='/home#login'">
+                    <i class="fas fa-chevron-left fa-3x"></i>
+                </div>
+                <h2 class="mb-0">
+                    Welcome to SCA Home Page
+                </h2>
+                <div class="subheading mb-5">
+                    You are allowed to access the following methods
+                </div>
+                <div class="flex-row justify-content-around">
+                    <button class="btn btn-outline-primary" onclick="window.location.href='/inspection_form'">Upload Inspection Results</button>
+                    <button class="btn btn-outline-primary" onclick="window.location.href='/generate_certificate'">Generate Certificate</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}
