@@ -4,46 +4,85 @@ pragma solidity ^0.7.0;
 
 //importing all roles
 
-import "./FarmerRole.sol";
-import "./SeedCertificationAgency.sol";
-import "./SeedProducingAgency.sol";
-import "./SeedProducingPlant.sol";
-import "./SeedTestingLab.sol";
+import "./roles/FarmerRole.sol";
+import "./roles/SeedCertificationAgency.sol";
+import "./roles/SeedProducingAgency.sol";
+import "./roles/SeedProducingPlant.sol";
+import "./roles/SeedTestingLab.sol";
 
-contract SupplyChain {
+contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     
     address owner;
+    uint[] arrOfAppIds;
     
     enum State {
         
         Applied,     //0
-        Inspect1,    //1
-        Harvested,   //2
-        Inspect2,    //3
-        Packaged,    //4
+        Verification,    //1
+        Inspection,   //2
+        AssignSPP,    //3
+        SeedProcessing,    //4
         SampleTest,  //5
-        Granted,     //6
-        Rejected     //7
+        Certification,   //6
+        Granted      //7
+    }
+
+    uint private numOfStates = 8;
+
+    struct SPA {
+        uint appid;
+        string lotNumber;
+        string owner;
+        string crop;
+        string variety;
+        string sourceTagNo;
+        string sourceClass;
+        string destinationClass;
+        string sourceQuantity;
+        uint sourceDateOfIssue;
+        string growerName;
+        string spaName;
+        uint dateOfIssue;
+        string sourceStoreHouse;
+        string destiStoreHouse;
+        string sgName;
+        string sgId;
+        string finYear;
+        string season;
+        uint landRecordsKhataNo;
+        uint landRecordsPlotNo;
+        string landRecordsArea;
+        string cropRegCode;
+        string sppName; 
+        string sppId;
+        string totalQuantityProcessed;
+        uint processingDate;
+        uint verificationDate;
+        string sampleSecreteCode;
+        bool samplePassed;
+        uint sampleTestDate;
+        string certificateNo;
+        uint certificateDate;
+        string tagSeries;
+        string tagIssuedRangeFrom;
+        string tagIssuedRangeTo;
+        uint noOfTagsIssued;
+        uint certificateValidity;
     }
     
     event ApplicationReceived(uint appid);
-    event Inspection1Complete(uint appid);
-    event Harvested(uint appid);
-    event Inspection2Complete(uint appid);
-    event Packaged(uint appid);
-    event SampleTestConducted(uint appid);
+    event VerificationStageReached(uint appid);
+    event InspectionStageReached(uint appid);
+    event WaitingToAssignSPP(uint appid);
+    event SeedProcessingStageReached(uint appid);
+    event SampleTestStageReached(uint appid);
+    event CertificateStageReached(uint appid);
     event CertificateGranted(uint appid);
-    event ApplicationRejected(uint appid);
     
     State constant defaultState = State.Applied;
-    mapping (uint => State) mapState;
-    uint appid = 0;
-    if(currentState==State.Applied) {
-        appid++;
-        currentState = State.Inspect1;
-        emit ApplicationReceived(appid);
-    }
-
+    mapping (uint => State) mapState; 
+    mapping (uint => SPA) spaOfId;
+    mapping (string=>SPA) secreteCodetoSPA;
 
     // helper hash function - 1 param
     function hash(string memory _str) private pure returns(bytes32) {
@@ -72,7 +111,168 @@ contract SupplyChain {
     _;
     }
 
+    // function to generate empty AppId if required
+    function generateEmptyApplication(uint appid) public onlySPA{
+        arrOfAppIds.push(appid);
+        mapState[appid] = defaultState;
+        SPA memory spa;
+        spaOfId[appid] = spa;
 
+        emit ApplicationReceived(appid);
+    }
+
+    // function to generate appln id and map to its first default state
+    function generateApplication(uint appid,
+        string memory lotNumber,
+        string memory Spaowner,
+        string memory crop,
+        string memory variety,
+        string memory sourceTagNo,
+        string memory sourceClass,
+        string memory destinationClass,
+        string memory sourceQuantity,
+        uint sourceDateOfIssue,
+        string memory growerName,
+        string memory spaName,
+        uint dateOfIssue,
+        string memory sourceStoreHouse,
+        string memory destiStoreHouse,
+        string memory sgName,
+        string memory sgId,
+        string memory finYear,
+        string memory season,
+        uint landRecordsKhataNo,
+        uint landRecordsPlotNo,
+        string memory landRecordsArea,
+        string memory cropRegCode
+    ) public onlySPA {
+        arrOfAppIds.push(appid);
+
+        mapState[appid] = State.Verification;
+        SPA storage spa;
+        spa.appid = appid;
+        spa.lotNumber = lotNumber;
+        spa.owner = Spaowner;
+        spa.crop = crop;
+        spa.variety = variety;
+        spa.sourceTagNo = sourceTagNo;
+        spa.sourceClass = sourceClass;
+        spa.destinationClass = destinationClass;
+        spa.sourceQuantity = sourceQuantity;
+        spa.sourceDateOfIssue = sourceDateOfIssue;
+        spa.growerName = growerName;
+        spa.spaName = spaName;
+        spa.dateOfIssue = dateOfIssue;
+        spa.sourceStoreHouse = sourceStoreHouse;
+        spa.destiStoreHouse = destiStoreHouse;
+        spa.sgName = sgName;
+        spa.sgId = sgId;
+        spa.finYear = finYear;
+        spa.season = season;
+        spa.landRecordsKhataNo = landRecordsKhataNo;
+        spa.landRecordsPlotNo = landRecordsPlotNo;
+        spa.landRecordsArea = landRecordsArea;
+        spa.cropRegCode = cropRegCode;
+
+        spaOfId[appid] = spa;
+
+        emit VerificationStageReached(appid);
+    }
+
+    function verifySPAData(uint appid) public onlySCA {
+        mapState[appid] = State.Inspection;
+
+        emit InspectionStageReached(appid);
+    }
+
+    function inspectData(uint appid) public onlySCA {
+        mapState[appid] = State.AssignSPP;
+
+        emit WaitingToAssignSPP(appid);
+    }
+ 
+
+    function assignSPP(uint appid,
+        string memory sppName,
+        string memory sppId
+    ) public onlySCA {
+
+        mapState[appid] = State.SeedProcessing;
+        SPA storage spa = spaOfId[appid];
+
+        spa.sppName = sppName;
+        spa.sppId = sppId;
+
+        spaOfId[appid] = spa;
+
+        emit SeedProcessingStageReached(appid);
+    }
+
+    function uploadSeedProcessingResults(uint appid,
+        string memory totalQuant,
+        uint processingDate,
+        uint verificationDate,
+        string memory sampleSecreteCode
+    ) public onlySCA {
+
+        mapState[appid] = State.SampleTest;
+        SPA storage spa = spaOfId[appid];
+
+        spa.totalQuantityProcessed = totalQuant;
+        spa.processingDate = processingDate;
+        spa.verificationDate = verificationDate;
+        spa.sampleSecreteCode = sampleSecreteCode;
+
+        spaOfId[appid] = spa;
+        secreteCodetoSPA[sampleSecreteCode] = spa;
+
+        emit SampleTestStageReached(appid);
+    }
+
+    function uploadSampleTestResults(string memory sampleSecreteCode,
+        bool samplePassed,
+        uint sampleTestDate
+    ) public onlySTL {
+
+        SPA storage spa = secreteCodetoSPA[sampleSecreteCode];
+        uint appid = spa.appid;
+        mapState[appid] = State.Certification;
+
+        spa.samplePassed = samplePassed;
+        spa.sampleTestDate = sampleTestDate;
+
+        secreteCodetoSPA[sampleSecreteCode] = spa;
+        spaOfId[appid] = spa;
+
+        emit CertificateStageReached(appid);
+    }
+
+    function grantCertificate(uint appid,
+        string memory certificateNo,
+        uint certificateDate,
+        string memory tagSeries,
+        string memory tagRangeFrom,
+        string memory tagRangeTo,
+        uint noOfTags,
+        uint certiValidity
+    ) public onlySCA {
+
+        mapState[appid] = State.Granted;
+        SPA storage spa = spaOfId[appid];
+
+        spa.certificateNo = certificateNo;
+        spa.certificateDate = certificateDate;
+        spa.tagSeries = tagSeries;
+        spa.tagIssuedRangeFrom = tagRangeFrom;
+        spa.tagIssuedRangeTo = tagRangeTo;
+        spa.noOfTagsIssued = noOfTags;
+        spa.certificateValidity = certiValidity;
+
+        spaOfId[appid] = spa;
+        secreteCodetoSPA[spa.sampleSecreteCode] = spa;
+
+        emit CertificateGranted(appid);
+    }
 
 
 }
