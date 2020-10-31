@@ -10044,6 +10044,20 @@ p.lead {
   font-weight: 400;
 }
 
+.application_submit{
+  width: 50%;
+}
+
+.login_submit{
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.profile_submit{
+  width: 30%;
+  margin-top: 2rem;
+}
+
 .subheading {
   font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   text-transform: uppercase;

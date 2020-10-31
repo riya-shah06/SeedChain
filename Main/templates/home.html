@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 {% block body %}
 <div class="">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
 <div class="container-fluid p-0" id="page-top">
             <!-- Home-->
             <section class="resume-section" id="home">
@@ -12,7 +14,6 @@
                     <p class="lead mb-5">
                         From farmers to Seed Producing Agencies, to Seed Processing Plants to Seed Certification.
                     </p>
-                    <button class="btn btn-outline-primary" onclick="window.location.href='/fetch_form'">Click Here to Fetch Details...</button>
                 </div>
             </section>
             <hr class="m-0" />
@@ -34,78 +35,188 @@
                     </p>
                 </div>
             </section>
+            <hr class="m-0" />
             <!-- Login-->
             <section class="resume-section" id="login">
-                <div class="resume-section-content">
+                <div class="resume-section-content" id="login_content">
                     <h1 class="mb-5">
                         Login
                     </h1>
-                    <form action="#" method="#">
-                        <div class="d-flex mb-2">
-                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                              <label><h3 class="mb-0 mr-5">Username</h3></label>
-                              <input type="text" name="username" class="form-control" value={{request.form.username}}>
-                            </div>
+                    <form action="#" method="POST">
+                        {{ login_form.hidden_tag() }}
+                        <table style="width:50%">
+                            <tr>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-3 mr-5">Username</h3></label>
+                                </td>
+                                <td>
+                                    {% if login_form.username.errors %}
+                                    {{ login_form.username(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in login_form.username.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ login_form.username(class="form-control form-control-lg mb-3") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 mr-5">Action</h3></label>
+                                </td>
+                                <td>
+                                    {{ login_form.action(class="form-control form-control-lg") }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center; padding-top: 0.5rem" colspan="2">
+                                    {{login_form.submit_login(class="btn btn-outline-primary btn-lg login_submit")}}
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="width: 50%">
+                            <hr>
                         </div>
-                        <div class="d-flex mb-2">
-                             <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                              <label><h3 class="mb-0 mr-5">Password</h3></label>
-                              <input type="password" name="password" class="form-control" value={{request.form.password}}>
-                            </div>
-                        </div>
-                        <div class="form-group d-flex flex-column flex-md-row">
-                            <button type="submit" class="btn btn-outline-primary pl-5 pr-5 mr-5 btn-lg">Submit</button>
-                            <h3 class="subheading"><a class="nav-link js-scroll-trigger" href="/create_profile">Create A Profile?</a></h3>
-                        </div>
+
+                    </form>
+                    <button class="btn btn-outline-primary btn-lg" style="width: 50%" onclick="show_create_profile()">
+                        Create Profile</button>
+                </div>
+                <div class="resume-section-content" id="create_profile">
+                    <div onclick="hide_create_profile()">
+                        <i class="fas fa-chevron-left fa-3x"></i>
+                    </div>
+                    <h1 class="mb-5">
+                        Create Profile
+                    </h1>
+                    <form action="#" method="POST">
+                        {{ profile_form.hidden_tag() }}
+                        <table style="width:100%">
+                            <tr>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 mr-5">First Name</h3></label>
+                                </td>
+                                <td>
+                                    {% if profile_form.fname.errors %}
+                                    {{ profile_form.fname(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in profile_form.fname.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ profile_form.fname(class="form-control form-control-lg mb-3") }}
+                                    {% endif %}
+                                </td>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 ml-5">Last Name</h3></label>
+
+                                </td>
+                                <td>
+                                    {% if profile_form.lname.errors %}
+                                    {{ profile_form.lname(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in profile_form.lname.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ profile_form.lname(class="form-control form-control-lg mb-3") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 mr-5">Role</h3></label>
+                                </td>
+                                <td>
+                                    {{ profile_form.role(class="form-control form-control-lg mb-3") }}
+                                </td>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 ml-5">Phone number</h3></label>
+
+                                </td>
+                                <td>
+                                    {% if profile_form.phoneNumber.errors %}
+                                    {{ profile_form.phoneNumber(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in profile_form.phoneNumber.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ profile_form.phoneNumber(class="form-control form-control-lg mb-3") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:start">
+                                    <label><h3 class="mb-0 mr-5">Email</h3></label>
+
+                                </td>
+                                <td colspan="2">
+                                    {% if profile_form.email.errors %}
+                                    {{ profile_form.email(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in profile_form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ profile_form.email(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center; padding-top: 0.5rem" colspan="2">
+                                    {{profile_form.submit_profile(class="btn btn-outline-primary btn-lg profile_submit")}}
+                                </td>
+                            </tr>
+
+                        </table>
 
                     </form>
                 </div>
             </section>
-            <hr class="m-0" />
-            <!-- Inspection-->
-            <section class="resume-section" id="inspection">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Inspection</h2>
-                    <form action="#" method="">
-                        <div class="d-flex mb-2">
-                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                                <label><h3 class="mb-0 mr-5">Something</h3></label>
-                                <input type="text" name="username" class="form-control mr-5" value={{request.form.username}}>
-                            </div>
-                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                                <label><h3 class="mb-0 mr-5">Something</h3></label>
-                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
-                            </div>
+            <!-- Fetch Details-->
+            <section class="resume-section" id="check_application">
+        <div class="resume-section-content">
+
+            <h1 class="mb-5">
+                Check Applications
+            </h1>
+            <form action="#" method="POST">
+                {{ profile_form.hidden_tag() }}
+                <div class="d-flex mb-2">
+                    <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                        <label><h3 class="mb-0 mr-5">Application Id</h3></label>
+                        {% if check_application_form.appln_id.errors %}
+                        {{ check_application_form.appln_id(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in check_application_form.appln_id.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
                         </div>
-                        <button type="submit" class="btn btn-outline-primary pl-5 pr-5 btn-lg">Submit</button>
-                    </form>
+                        {% else %}
+                        {{ check_application_form.appln_id(class="form-control form-control-lg mt-4") }}
+                        {% endif %}
+                    </div>
                 </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Lab Analysis-->
-            <section class="resume-section" id="lab_analysis">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Lab Analysis</h2>
-                    <form action="#" method="">
-                        <div class="d-flex mb-2">
-                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                                <label><h3 class="mb-0 mr-5">Something</h3></label>
-                                <input type="text" name="username" class="form-control mr-5" value={{request.form.username}}>
-                            </div>
-                            <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                                <label><h3 class="mb-0 mr-5">Something</h3></label>
-                                <input type="text" name="username" class="form-control" value={{request.form.username}}>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-outline-primary pl-5 pr-5 btn-lg">Submit</button>
-                    </form>
+
+                <div class="form-group d-flex flex-column flex-md-row">
+                    {{check_application_form.submit_appln_id(class="btn btn-outline-primary btn-lg pl-5 pr-5 mr-5")}}
                 </div>
-            </section>
+
+            </form>
+        </div>
+    </section>
             <hr class="m-0" />
             <!-- Meet the team-->
             <section class="resume-section" id="meet_the_team">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Meet the Team</h2>
+                    <h1 class="mb-5">Meet the Team</h1>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Rachana</h3>
@@ -123,7 +234,5 @@
                 </div>
             </section>
         </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="../static/js/home.js"></script>
 </div>
 {% endblock %}

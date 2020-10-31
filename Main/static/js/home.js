@@ -40,3 +40,17 @@
         target: "#sideNav",
     });
 })(jQuery); // End of use strict
+
+function show_create_profile(){
+    document.getElementById('create_profile').style.display = "block";
+    document.getElementById('login_content').style.display = "none";
+}
+
+function hide_create_profile(){
+    document.getElementById('create_profile').style.display = "none";
+    document.getElementById('login_content').style.display = "block";
+}
+
+$(document).ready(function(){
+    hide_create_profile();
+})
