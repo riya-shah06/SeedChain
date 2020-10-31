@@ -1,22 +1,24 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="">
+<div class="main_body">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="../static/js/home.js"></script>
 <div class="container-fluid p-0" id="page-top">
             <!-- Home-->
-            <section class="resume-section" id="home">
-                <div class="resume-section-content">
-                    <h1 class="mb-0">Seed<span class="text-primary">Chain</span></h1>
-                    <div class="subheading mb-5">
-                        Blockchain for the seed supply chain ecosystem.
-                    </div>
-                    <p class="lead mb-5">
-                        From farmers to Seed Producing Agencies, to Seed Processing Plants to Seed Certification.
-                    </p>
+        <div class="background_div">
+        <section class="resume-section" id="home">
+            <div class="resume-section-content">
+                <div>
+                    <h1 class="mb-0 mt-10">Seed<span class="text-primary">Chain</span></h1>
                 </div>
-            </section>
-            <hr class="m-0" />
+                <div class="subheading mb-5">
+                    Blockchain for the seed supply chain ecosystem.
+                </div>
+            </div>
+        </section>
+        <hr class="m-0" />
+    </div>
+
             <!-- About-->
             <section class="resume-section" id="about">
                 <div class="resume-section-content">
@@ -182,36 +184,36 @@
             </section>
             <!-- Fetch Details-->
             <section class="resume-section" id="check_application">
-        <div class="resume-section-content">
+            <div class="resume-section-content">
 
-            <h1 class="mb-5">
-                Check Applications
-            </h1>
-            <form action="#" method="POST">
-                {{ profile_form.hidden_tag() }}
-                <div class="d-flex mb-2">
-                    <div class="form-group d-flex flex-column flex-md-row justify-content-between">
-                        <label><h3 class="mb-0 mr-5">Application Id</h3></label>
-                        {% if check_application_form.appln_id.errors %}
-                        {{ check_application_form.appln_id(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in check_application_form.appln_id.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
+                <h1 class="mb-5">
+                    Check Applications
+                </h1>
+                <form action="#" method="POST">
+                    {{ profile_form.hidden_tag() }}
+                    <div class="d-flex mb-2">
+                        <div class="form-group d-flex flex-column flex-md-row justify-content-between">
+                            <label><h3 class="mb-0 mr-5">Application Id</h3></label>
+                            {% if check_application_form.appln_id.errors %}
+                            {{ check_application_form.appln_id(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in check_application_form.appln_id.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ check_application_form.appln_id(class="form-control form-control-lg mt-4") }}
+                            {% endif %}
                         </div>
-                        {% else %}
-                        {{ check_application_form.appln_id(class="form-control form-control-lg mt-4") }}
-                        {% endif %}
                     </div>
-                </div>
 
-                <div class="form-group d-flex flex-column flex-md-row">
-                    {{check_application_form.submit_appln_id(class="btn btn-outline-primary btn-lg pl-5 pr-5 mr-5")}}
-                </div>
+                    <div class="form-group d-flex flex-column flex-md-row">
+                        {{check_application_form.submit_appln_id(class="btn btn-outline-primary btn-lg pl-5 pr-5 mr-5")}}
+                    </div>
 
-            </form>
-        </div>
-    </section>
+                </form>
+            </div>
+            </section>
             <hr class="m-0" />
             <!-- Meet the team-->
             <section class="resume-section" id="meet_the_team">

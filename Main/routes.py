@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request
-from Main.forms import RegisterForm, LoginForm, ProfileForm, CheckApplicationForm
+from Main.forms import RegisterForm, LoginForm, ProfileForm, CheckApplicationForm, BuyerForm
 from Main import app
 from datetime import date
 
@@ -10,6 +10,7 @@ def home():
     login_form = LoginForm()
     profile_form = ProfileForm()
     check_application_form = CheckApplicationForm()
+
     if login_form.submit_login.data and login_form.validate_on_submit():
         username = login_form.action.data
         choice = login_form.action.data
@@ -20,6 +21,8 @@ def home():
         elif choice=='4':
             return redirect(url_for('stl_form'))
         elif choice=='5':
+            return redirect((url_for('buyer_form')))
+        elif choice=='6':
             return redirect((url_for('home')))
     if profile_form.submit_profile.data and profile_form.validate_on_submit():
         print("Profile Created")
@@ -41,6 +44,13 @@ def inspection_form():
 @app.route("/fetch_details/<applicationId>")
 def fetch_details(applicationId):
     return render_template('fetch_details.html', appln_id = applicationId)
+
+@app.route("/buyer_form",  methods=["POST", "GET"])
+def buyer_form():
+    buyer_form = BuyerForm()
+    if buyer_form.validate_on_submit:
+        print("Buyer details added")
+    return render_template('buyer_form.html', buyer_form=buyer_form)
 
 @app.route("/application_form", methods=['GET', 'POST'])
 def application_form():

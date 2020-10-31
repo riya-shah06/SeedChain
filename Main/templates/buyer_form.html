@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+
+    <div class="container-fluid p-0">
+        <!-- Buyer Content-->
+        <section class="resume-section" id="inspection">
+            <div class="resume-section-content" id="buyer_content">
+                <h2 class="mb-5">
+                    Buyer Information
+                </h2>
+                <form action="#" method="POST">
+                    {{ buyer_form.hidden_tag() }}
+                    <table style="width:100%">
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5 subheading">Application Id</h3></label>
+                            </td>
+                            <td>
+                                {% if buyer_form.appln_id.errors %}
+                                {{ buyer_form.appln_id(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in buyer_form.appln_id.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ buyer_form.appln_id(class="form-control form-control-lg mb-3") }}
+                                {% endif %}
+                            </td>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 ml-5 subheading">Quantity</h3></label>
+
+                            </td>
+                            <td>
+                                {% if buyer_form.quantity.errors %}
+                                {{ buyer_form.quantity(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in buyer_form.quantity.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ buyer_form.quantity(class="form-control form-control-lg mb-3") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table style="width:100%"  class="mb-3">
+                        <tr>
+                            <td colspan="4"><h3>Buyer Information :</h3></td>
+                        </tr>
+                    </table>
+                    <table style="width:100%">
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5 subheading">First Name</h3></label>
+                            </td>
+                            <td>
+                                {% if buyer_form.fname.errors %}
+                                {{ buyer_form.fname(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in buyer_form.fname.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ buyer_form.fname(class="form-control form-control-lg mb-3") }}
+                                {% endif %}
+                            </td>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 ml-5 subheading">Last Name</h3></label>
+
+                            </td>
+                            <td>
+                                {% if buyer_form.lname.errors %}
+                                {{ buyer_form.lname(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in buyer_form.lname.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ buyer_form.lname(class="form-control form-control-lg mb-3") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:start">
+                                <label><h3 class="mb-0 mr-5 subheading">Phone Number</h3></label>
+
+                            </td>
+                            <td colspan="2">
+                                {% if buyer_form.phoneNumber.errors %}
+                                {{ buyer_form.phoneNumber(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in buyer_form.phoneNumber.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ buyer_form.phoneNumber(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; padding-top: 0.5rem" colspan="4">
+                                {{buyer_form.submit_buyer(class="btn btn-outline-primary btn-lg profile_submit")}}
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}

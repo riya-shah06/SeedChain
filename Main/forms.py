@@ -25,7 +25,7 @@ class RegisterForm(FlaskForm):
     submit_application_form = SubmitField("Submit")
 
 class LoginForm(FlaskForm):
-    myChoices = [('1', 'Select an Action'), ('2', 'Create an Application'), ('3', 'Upload Inspection Results'), ('4', 'Upload Lab testing Results'), ('5','Others')]
+    myChoices = [('1', 'Select an Action'),('2', 'Create an Application'),('3', 'Upload Inspection Results'),('4', 'Upload Lab testing Results'),('5', 'Enter Buyer Details'),('6','Others')]
     action = SelectField(u'Action', choices = myChoices, validators = [DataRequired()])
     username = StringField("Username", validators = [DataRequired()])
     submit_login = SubmitField("Submit")
@@ -42,3 +42,11 @@ class ProfileForm(FlaskForm):
 class CheckApplicationForm(FlaskForm):
     appln_id = StringField("Application Id", validators=[DataRequired()])
     submit_appln_id = SubmitField("Fetch Details")
+
+class BuyerForm(FlaskForm):
+    appln_id = StringField("Application Id", validators=[DataRequired()])
+    quantity = StringField("Quantity", validators = [DataRequired()])
+    fname = StringField("First Name", validators = [DataRequired()])
+    lname = StringField("Last Name", validators = [DataRequired()])
+    phoneNumber = StringField("Phone Number", validators = [DataRequired()])
+    submit_buyer = SubmitField("Submit")
