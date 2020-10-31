@@ -24,10 +24,12 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         SeedProcessing,    //4
         SampleTest,  //5
         Certification,   //6
-        Granted      //7
+        Granted,      //7
+        Sold,        //8
+        Returned     //9
     }
 
-    uint private numOfStates = 8;
+    uint private numOfStates = 10;
 
     struct SPA {
         uint appid;
@@ -66,8 +68,11 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         string tagSeries;
         string tagIssuedRangeFrom;
         string tagIssuedRangeTo;
+        string[] tags;
         uint noOfTagsIssued;
         uint certificateValidity;
+        uint lastBagSold;
+        address[] farmersSoldTo;
     }
     
     event ApplicationReceived(uint appid);
@@ -112,7 +117,7 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     }
 
     // function to generate empty AppId if required
-    function generateEmptyApplication(uint appid) public onlySPA{
+    function generateEmptyApplication(uint appid) external onlySPA{
         arrOfAppIds.push(appid);
         mapState[appid] = defaultState;
         SPA memory spa;
@@ -122,30 +127,13 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     }
 
     // function to generate appln id and map to its first default state
-    function generateApplication(uint appid,
-        string memory lotNumber,
-        string memory Spaowner,
-        string memory crop,
-        string memory variety,
-        string memory sourceTagNo,
-        string memory sourceClass,
-        string memory destinationClass,
-        string memory sourceQuantity,
-        uint sourceDateOfIssue,
-        string memory growerName,
-        string memory spaName,
-        uint dateOfIssue,
-        string memory sourceStoreHouse,
-        string memory destiStoreHouse,
-        string memory sgName,
-        string memory sgId,
-        string memory finYear,
-        string memory season,
-        uint landRecordsKhataNo,
-        uint landRecordsPlotNo,
-        string memory landRecordsArea,
-        string memory cropRegCode
-    ) public onlySPA {
+    function generateApplicationPart1(uint appid,
+        string calldata lotNumber,
+        string calldata Spaowner,
+        string calldata crop,
+        string calldata variety,
+        string calldata sourceTagNo
+    ) external onlySPA {
         arrOfAppIds.push(appid);
 
         mapState[appid] = State.Verification;
@@ -156,6 +144,22 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.crop = crop;
         spa.variety = variety;
         spa.sourceTagNo = sourceTagNo;
+
+        spaOfId[appid] = spa;
+
+    }
+
+    function generateApplicationPart2(uint appid,
+        string memory sourceClass,
+        string memory destinationClass,
+        string memory sourceQuantity,
+        uint sourceDateOfIssue,
+        string memory growerName,
+        string memory spaName,
+        uint dateOfIssue
+    ) external onlySPA {
+        SPA storage spa = spaOfId[appid];
+
         spa.sourceClass = sourceClass;
         spa.destinationClass = destinationClass;
         spa.sourceQuantity = sourceQuantity;
@@ -163,6 +167,24 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.growerName = growerName;
         spa.spaName = spaName;
         spa.dateOfIssue = dateOfIssue;
+
+        spaOfId[appid] = spa;
+    }
+
+    function generateApplicationPart3(uint appid,
+        string memory sourceStoreHouse,
+        string memory destiStoreHouse,
+        string memory sgName,
+        string memory sgId,
+        string memory finYear,
+        string memory season,
+        uint landRecordsKhataNo,
+        uint landRecordsPlotNo,
+        string memory landRecordsArea,
+        string memory cropRegCode
+    ) external onlySPA {
+        SPA storage spa = spaOfId[appid];
+
         spa.sourceStoreHouse = sourceStoreHouse;
         spa.destiStoreHouse = destiStoreHouse;
         spa.sgName = sgName;
@@ -175,17 +197,18 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.cropRegCode = cropRegCode;
 
         spaOfId[appid] = spa;
-
+        
         emit VerificationStageReached(appid);
+
     }
 
-    function verifySPAData(uint appid) public onlySCA {
+    function verifySPAData(uint appid) external onlySCA {
         mapState[appid] = State.Inspection;
 
         emit InspectionStageReached(appid);
     }
 
-    function inspectData(uint appid) public onlySCA {
+    function inspectData(uint appid) external onlySCA {
         mapState[appid] = State.AssignSPP;
 
         emit WaitingToAssignSPP(appid);
@@ -193,9 +216,9 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
  
 
     function assignSPP(uint appid,
-        string memory sppName,
-        string memory sppId
-    ) public onlySCA {
+        string calldata sppName,
+        string calldata sppId
+    ) external onlySCA {
 
         mapState[appid] = State.SeedProcessing;
         SPA storage spa = spaOfId[appid];
@@ -209,11 +232,11 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
     }
 
     function uploadSeedProcessingResults(uint appid,
-        string memory totalQuant,
+        string calldata totalQuant,
         uint processingDate,
         uint verificationDate,
-        string memory sampleSecreteCode
-    ) public onlySCA {
+        string calldata sampleSecreteCode
+    ) external onlySCA {
 
         mapState[appid] = State.SampleTest;
         SPA storage spa = spaOfId[appid];
@@ -229,10 +252,10 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         emit SampleTestStageReached(appid);
     }
 
-    function uploadSampleTestResults(string memory sampleSecreteCode,
+    function uploadSampleTestResults(string calldata sampleSecreteCode,
         bool samplePassed,
         uint sampleTestDate
-    ) public onlySTL {
+    ) external onlySTL {
 
         SPA storage spa = secreteCodetoSPA[sampleSecreteCode];
         uint appid = spa.appid;
@@ -251,11 +274,12 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         string memory certificateNo,
         uint certificateDate,
         string memory tagSeries,
-        string memory tagRangeFrom,
-        string memory tagRangeTo,
+        string calldata tagRangeFrom,
+        uint tagNumberStart,
+        string calldata tagRangeTo,
         uint noOfTags,
         uint certiValidity
-    ) public onlySCA {
+    ) external onlySCA {
 
         mapState[appid] = State.Granted;
         SPA storage spa = spaOfId[appid];
@@ -267,12 +291,44 @@ contract SupplyChain is FarmerRole, SCARole, SPARole, SPPRole, STLRole {
         spa.tagIssuedRangeTo = tagRangeTo;
         spa.noOfTagsIssued = noOfTags;
         spa.certificateValidity = certiValidity;
+        spa.lastBagSold = 0;
+
+        // this loop creates and stores all tags of the bags for farmer to buy from
+        for(uint i=0; i<noOfTags; i++){
+            
+            string memory tagno = string(abi.encodePacked(tagSeries, (tagNumberStart+i)));
+            spa.tags.push(tagno);
+        }
 
         spaOfId[appid] = spa;
         secreteCodetoSPA[spa.sampleSecreteCode] = spa;
 
+        uint i=0;
+        while(i < arrOfAppIds.length){
+            if(arrOfAppIds[i] == appid){
+                break;
+            }
+        }
+        arrOfAppIds[i] = arrOfAppIds[arrOfAppIds.length - 1];
+        arrOfAppIds.pop();
+
         emit CertificateGranted(appid);
     }
 
+    function sellBagsToFarmer(uint appid, address farmer, uint noOfBags) external returns (string memory TagStartFrom) {
+        SPA storage spa = spaOfId[appid];
+        if(spa.lastBagSold == 0){
+            TagStartFrom = spa.tagIssuedRangeFrom;
+        }
+        else {
+            // add TagStartFrom based on what is generated
+        }
+        spa.lastBagSold += noOfBags;
+
+        // here will have to check if this farmer already exists in array, If yes, then skip
+        spa.farmersSoldTo.push(farmer);
+        spaOfId[appid] = spa;
+        secreteCodetoSPA[spa.sampleSecreteCode] = spa;
+    }
 
 }
