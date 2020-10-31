@@ -23,3 +23,7 @@ def fetch_form():
 def create_profile():
     return render_template('create_profile.html')
 
+@app.route("/application_form")
+def get_application_form():
+    return render_template('applicationForm.html')
+

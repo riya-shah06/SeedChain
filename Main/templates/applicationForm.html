@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="">
+
+    <div class="container-fluid p-0">
+        <!-- Application Form-->
+        <section class="resume-section" id="application_form">
+            <div class="resume-section-content">
+                <h2 class="mb-2">Application Form</h2>
+                <form action="#" method="#">
+
+                    <table id="application_table1" style="width:100%">
+                        <tr>
+                            <td><label><div class="subheading2">Lot Number</div></label></td>
+                            <td><input type="text" name="lotNumber" class="form-control" value={{request.form.lotNumber}}></td>
+                            <td><label><div class="subheading2">Owner</div></label></td>
+                            <td><input type="text" name="owner" class="form-control" value={{request.form.owner}}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Crop</div></label></td>
+                            <td><input type="text" name="crop" class="form-control" value={{request.form.crop}}></td>
+                            <td><label><div class="subheading2" >Variety</div></label></td>
+                            <td><input type="text" name="variety" class="form-control" value={{request.form.variety}}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <hr/>
+                    <table id="application_table2" style="width: 100%">
+                        <tr>
+                            <td><label><div class="subheading2" >Source Class</div></label></td>
+                            <td colspan="2"><input type="text" name="sourceClass" class="form-control" value={{request.form.sourceClass}}></td>
+                            <td><label><div class="subheading2" >Destination Class</div></label></td>
+                            <td colspan="2"><input type="text" name="destinationClass" class="form-control" value={{request.form.destinationClass}}></td>
+
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Source Tag No.</div></label></td>
+                            <td><input type="text" name="sourceTagNo" class="form-control" value={{request.form.sourceTagNo}}></td>
+                            <td><label><div class="subheading2" >SG ID</div></label></td>
+                            <td><input type="text" name="sgID" class="form-control" value={{request.form.sgID}}></td>
+                            <td><label><div class="subheading2" >Quantity</div></label></td>
+                            <td><input type="text" name="sourceQuantity" class="form-control" value={{request.form.sourceQuantity}}></td>
+                        </tr>
+
+                        <tr>
+                            <td><label><div class="subheading2" >SPA Name</div></label></td>
+                            <td><input type="text" name="spaName" class="form-control" value={{request.form.spaName}}></td>
+                            <td><label><div class="subheading2" >Grower Name</div></label></td>
+                            <td><input type="text" name="growerName" class="form-control" value={{request.form.growerName}}></td>
+                            <td><label><div class="subheading2" >Source Store House</div></label></td>
+                            <td><input type="text" name="sourceStorehouse" class="form-control" value={{request.form.sourceStorehouse}}></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table id="application_table3" style="width: 100%">
+                        <tr>
+                            <td><label><div class="subheading2" >FinYear</div></label></td>
+                            <td><input type="text" name="finYear" class="form-control" value={{request.form.finYear}}></td>
+                            <td><label><div class="subheading2" >Season</div></label></td>
+                            <td><input type="text" name="season" class="form-control" value={{request.form.season}}></td>
+                            <td><label><div class="subheading2" >Khata Number</div></label></td>
+                            <td><input type="text" name="landRecordsKhataNo" class="form-control" value={{request.form.landRecordsKhataNo}}></td>
+                        </tr>
+                        <tr>
+                            <td><label><div class="subheading2" >Plot Number</div></label></td>
+                            <td><input type="text" name="landRecordsPlotNo" class="form-control" value={{request.form.landRecordsPlotNo}}></td>
+                            <td><label><div class="subheading2" >Area</div></label></td>
+                            <td><input type="text" name="landRecordsArea" class="form-control" value={{request.form.landRecordsArea}}></td>
+                            <td><label><div class="subheading2" >Crop Registration Code</div></label></td>
+                            <td><input type="text" name="cropRegCode" class="form-control" value={{request.form.cropRegCode}}></td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="text-align: center">
+
+                                <button type="submit" class="btn btn-outline-primary pl-5 pr-5 mr-5 btn-lg" style="width: 50%">Submit</button>
+
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/js/home.js"></script>
+</div>
+{% endblock %}
